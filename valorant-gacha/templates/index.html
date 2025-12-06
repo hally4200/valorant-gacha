@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VALORANT GACHA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --main-color: #00e5ff;
+            --glow-color: #00e5ff;
+        }
+
+        body.SSR { --main-color: #ffd700; --glow-color: #ffaa00; }
+        body.SR  { --main-color: #a020f0; --glow-color: #d050ff; }
+        body.R   { --main-color: #00aaff; --glow-color: #00ffff; }
+
+        body {
+            background-image: url("{{ url_for('static', filename='images/bg.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #0f1923;
+            color: white;
+            font-family: 'DIN Next W1G', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            transition: all 0.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-title {
+            position: absolute;
+            top: 5%;
+            width: 100%;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        #gachaScene {
+            margin-top: 100px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .gacha-orb {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            margin: 0 auto;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), var(--main-color) 40%, rgba(0,0,0,0.6) 80%);
+            box-shadow: 0 0 20px var(--glow-color), 0 0 50px var(--glow-color), inset 0 0 40px rgba(255,255,255,0.8);
+            animation: float 2.5s infinite ease-in-out, pulseGlow 2s infinite alternate;
+            transition: all 0.3s;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px var(--glow-color), 0 0 50px var(--glow-color), inset 0 0 40px rgba(255,255,255,0.8); }
+            100% { box-shadow: 0 0 40px var(--glow-color), 0 0 80px var(--glow-color), inset 0 0 50px rgba(255,255,255,0.9); }
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .gacha-orb.shaking { animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 25% { transform: translate(-3px, 0px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 75% { transform: translate(3px, 1px) rotate(-1deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+
+        .flash-effect {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s;
+            z-index: 999;
+        }
+
+        .result-container {
+            display: none;
+            z-index: 20;
+            width: 95%;
+            max-width: 1200px;
+            animation: popUp 0.6s cubic-bezier(0.17, 0.67, 0.23, 1.4);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .result-flex-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .char-info-side {
+            flex: 1;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .video-side {
+            flex: 1.5;
+            min-width: 320px;
+            max-width: 600px;
+        }
+
+        .youtube-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 3px solid var(--main-color);
+            box-shadow: 0 0 30px var(--glow-color);
+            border-radius: 8px;
+        }
+
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .char-image {
+            width: 280px;
+            height: auto;
+            filter: drop-shadow(0 0 20px var(--glow-color));
+            margin-bottom: 10px;
+        }
+
+        .player-name {
+            font-size: 4rem;
+            margin: 0;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 0 0 20px var(--glow-color), 2px 2px 0px #000;
+            line-height: 1;
+        }
+
+        .code-box {
+            background: rgba(31, 35, 38, 0.95);
+            padding: 15px 30px;
+            border: 2px solid var(--main-color);
+            box-shadow: 0 0 15px var(--glow-color);
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            cursor: pointer;
+            word-break: break-all;
+            backdrop-filter: blur(5px);
+            display: inline-block;
+        }
+        .code-box:active { transform: scale(0.98); background: #333; }
+
+        .retry-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 15px 0;
+            background: var(--main-color);
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 0 20px var(--glow-color);
+            transition: 0.2s;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .retry-btn:hover { filter: brightness(1.2); }
+        
+        @media (max-width: 768px) {
+            .result-flex-wrapper {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .char-image { width: 200px; }
+            .player-name { font-size: 3rem; }
+            .video-side { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <input type="hidden" id="data-image-file" value="{{ image_file }}">
+    <input type="hidden" id="data-youtube-id" value="{{ youtube_id }}">
+    
+    <div class="game-title">VALORANT<br><span style="font-size: 1.5rem; opacity: 0.8;">CROSSHAIR GACHA</span></div>
+
+    <div id="gachaScene">
+        <div class="gacha-orb" id="orb" onclick="startGacha()"></div>
+        <p style="margin-top: 20px; letter-spacing: 3px; color: #ccc; text-align: center; text-shadow: 1px 1px 2px black;">TAP TO SPIN</p>
+    </div>
+
+    <div class="flash-effect" id="flash"></div>
+
+    <div class="result-container" id="resultScene">
+        <div class="result-flex-wrapper">
+            <div class="char-info-side">
+                <img id="resultCharImg" class="char-image" src="" alt="Character">
+                <h1 class="player-name">{{ name }}</h1>
+                <div class="code-box" onclick="copyCode(this)">
+                    {{ code }}
+                    <div style="font-size: 12px; color: #aaa; margin-top: 5px;">(Click to Copy)</div>
+                </div>
+            </div>
+            <div class="video-side">
+                <iframe id="youtube-player" class="youtube-frame" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a href="/" class="retry-btn">AGAIN</a>
+    </div>
+
+    <script>
+        function startGacha() {
+            const imageFile = document.getElementById('data-image-file').value;
+            // 変数に入れるときは let を使う（書き換えるため）
+            let youtubeId = document.getElementById('data-youtube-id').value;
+            
+            const body = document.body;
+            const orb = document.getElementById('orb');
+            const flash = document.getElementById('flash');
+            const gachaScene = document.getElementById('gachaScene');
+            const resultScene = document.getElementById('resultScene');
+            const charImg = document.getElementById('resultCharImg');
+            const title = document.querySelector('.game-title');
+            const youtubePlayer = document.getElementById('youtube-player');
+
+            // ▼▼▼ 追加：URLからIDだけを自動で抜き出す処理 ▼▼▼
+            if (youtubeId.includes('v=')) {
+                // "https://...watch?v=XXXXX" の XXXXX を取得
+                youtubeId = youtubeId.split('v=')[1];
+                // もし "&t=10s" みたいなのが後ろについてたら削除
+                const ampersandPosition = youtubeId.indexOf('&');
+                if (ampersandPosition !== -1) {
+                    youtubeId = youtubeId.substring(0, ampersandPosition);
+                }
+            } else if (youtubeId.includes('youtu.be/')) {
+                // "https://youtu.be/XXXXX" の XXXXX を取得
+                youtubeId = youtubeId.split('youtu.be/')[1];
+            }
+            // ▲▲▲ 追加ここまで ▲▲▲
+
+            charImg.src = "/static/images/" + imageFile;
+
+            orb.classList.remove('float');
+            orb.classList.add('shaking');
+
+            setTimeout(() => {
+                flash.style.opacity = '1';
+                setTimeout(() => {
+                    let rarityClass = 'R';
+                    if(imageFile.includes('ssr') || imageFile.includes('jett')) { rarityClass = 'SSR'; }
+                    else if (imageFile.includes('sr') || imageFile.includes('reyna')) { rarityClass = 'SR'; }
+                    body.classList.add(rarityClass);
+                    
+                    gachaScene.style.display = 'none';
+                    title.style.display = 'none';
+                    
+                    // 整形したIDを使って再生
+                    youtubePlayer.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1`;
+                    
+                    resultScene.style.display = 'block';
+                    flash.style.opacity = '0';
+                }, 100);
+            }, 2000);
+        }
+
+        function copyCode(element) {
+            const code = element.childNodes[0].textContent.trim();
+            navigator.clipboard.writeText(code).then(() => {
+                alert("COPIED!");
+            });
+        }
+    </script>
+</body>
+</html>

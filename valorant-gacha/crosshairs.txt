@@ -1,0 +1,16 @@
+TenZ,0;P;c;5;h;0;f;0;0l;4;0o;2;0a;1;0f;0;1b;0,chibi_omen.png,https://youtu.be/5g_n4rvkTws?si=UFGeFK8niajAEU1J
+Demon1,0;s;1;P;c;5;h;0;0l;4;0o;2;0a;1;0f;0;1b;0,chibi_jett.png,https://youtu.be/mITRrf0a7Qo?si=M1e8rcgyG8StF8Gu
+Meiy,0;s;1;P;o;1;d;1;0b;0;1b;0,chibi_jett.png,https://youtu.be/txVPaCKWbjM?si=OzSJ7yXmMfRdsvmE
+Akame,0;s;1;P;o;1;d;1;0b;0;1b;0,chibi_jett.png,https://youtu.be/wfKxEw-Kxyk?si=PVK-xKvKS24ctAeu
+gyen,0;s;1;P;o;1;d;1;0b;0;1b;0,chibi_clove.png,https://youtu.be/tMzyNpZwdeA?si=isndglnEgpKcv2YG
+Seoldam,0;s;1;P;o;1;0t;1;0l;2;0o;1;0a;1;0f;0;1b;0;S;d;0,chibi_jett.png,https://youtu.be/iEh3bRvMZJU?si=SnPPJjsRkUaCU3Gf
+Gon,0;s;1;P;h;0;0l;3;0o;1;0f;0;1b;0,chibi_omen.png,https://youtu.be/N-BICle81FU?si=1Lo_iTbfVb-WoIBw
+Aace,0;s;1;P;o;1;d;1;0b;0;1b;0,chibi_yoru.png,https://youtu.be/t3HgaHzKcxA?si=q7CRNHyJiBZCx1Ey
+neth,0;s;1;P;c;3;h;0;0l;3;0o;0;0a;1;0f;0;1b;0,chibi_raze.png,https://youtu.be/67xw7mNRNDQ?si=XidoGG14-Vuwaxjs
+t3xture,0;s;1;P;h;0;f;0;0l;3;0o;2;0a;1;0f;0;1b;0;S;d;0,chibi_raze.png,https://youtu.be/TsAkKNI3tm0?si=NKRwXJF3jcRZnd-6
+沖縄に行くために,0;P;o;0.714;d;1;0b;0;1b;0,chibi_reyna.png,https://youtu.be/ZxVD42VTNE8?si=VGHyQpUfT6RwlZg0
+something,0;s;1;P;f;0;0t;1;0l;3;0o;2;0a;1;0f;0;1b;0,chibi_jett.png,https://youtu.be/cz4a49kTsnk?si=Io8rTCmd-BE7kBri
+f0rsakeN,0;s;1;P;h;0;f;0;0l;8;0o;1;0a;1;0f;0;1b;0,chibi_omen.png,https://youtu.be/GmeI4itZAgE?si=Fw5fi5ch5S3GdYKC
+Boaster,0;s;1;P;c;7;o;1;d;1;z;4;f;0;0b;0;1b;0,chibi_iso.png,https://youtu.be/2AeAtAjhDjc?si=GMmja9fcfaM6sCjI
+Kaajak,0;s;1;P;h;0;f;0;0l;2;0o;1;0a;1;0f;0;1b;0,chibi_yoru.png,https://youtu.be/aof6F8aaQeo?si=Y4-CVHN5vdN2oMzC
+Laz,0;p;0;c;1;s;1;P;o;1;f;0;0t;1;0l;3;0v;2;0a;1;0f;0;1b;0;A;c;7;h;0;d;1;z;3;m;1;0t;3;0l;2;0o;0;0a;0.5;0f;0;1b;0;S;s;0.5;o;1,chibi_chamber.png,https://youtu.be/qhzQxvCQPfY?si=hzOw3Pa3-7HRmHxD
